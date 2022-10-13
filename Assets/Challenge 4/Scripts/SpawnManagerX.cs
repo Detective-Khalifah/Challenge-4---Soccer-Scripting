@@ -11,6 +11,8 @@ public class SpawnManagerX : MonoBehaviour
     private float spawnZMin = 15; // set min spawn Z
     private float spawnZMax = 25; // set max spawn Z
 
+    public float enemySpeed = 5;
+
     public int enemyCount;
     public int waveCount = 0;
 
@@ -54,6 +56,7 @@ public class SpawnManagerX : MonoBehaviour
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
         }
 
+        enemySpeed += 10;
         waveCount++;
         ResetPlayerPosition(); // put player back at start
 
