@@ -8,6 +8,8 @@ public class PlayerControllerX : MonoBehaviour
     private float speed = 500;
     private GameObject focalPoint;
 
+    public ParticleSystem smokeParticle;
+
     public bool hasPowerup;
     public GameObject powerupIndicator;
     public int powerUpDuration = 5;
@@ -23,9 +25,19 @@ public class PlayerControllerX : MonoBehaviour
 
     void Update()
     {
-        // Add force to player in direction of the focal point (and camera)
         float verticalInput = Input.GetAxis("Vertical");
-        playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed * Time.deltaTime); 
+        
+        // Set player speed to turbo boost if spacebar key is pressed
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // speed *= 3;
+            playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed * Time.deltaTime, ForceMode.Impulse);
+            smokeParticle.Play();
+        }
+        else // Add force to player in direction of the focal point (and camera)
+        {
+            playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed * Time.deltaTime);
+        }
 
         // Set powerup indicator position to beneath player
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
